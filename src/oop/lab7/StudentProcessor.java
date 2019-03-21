@@ -16,6 +16,16 @@ public class StudentProcessor {
         return students.removeIf( student -> ( student.getId() == id ) );
     }
 
+    public Student findStudent(int id) {
+        Student student = new Student.StudentBuilder().setID(id).build();
+        int index = students.indexOf(student);
+        if ( index != -1 ) {
+            return students.get(index);
+        } else {
+            return null;
+        }
+    }
+
     public void readTextFile(String fileName) {
         try ( BufferedReader reader = new BufferedReader(new FileReader(fileName)) ) {
             Student.StudentBuilder builder = new Student.StudentBuilder();
@@ -65,7 +75,7 @@ public class StudentProcessor {
         }
     }
 
-    public void showAll() {
+    public void printAllStudents() {
         printStudents(students, "All records:");
     }
 
@@ -77,17 +87,15 @@ public class StudentProcessor {
         }
     }
 
-    public void showAllSurnames() {
-        showSurnames(students);
+    public void printAllSurnames() {
+        printSurnames(students);
     }
 
-    public void showSurnames(ArrayList<Student> students) {
+    public void printSurnames(ArrayList<Student> students) {
         for (Student student : students) {
             System.out.println(student.getId()+" "+student.getSurname());
         }
     }
-
-
 
     public ArrayList<Student> searchFaculty(String faculty) {
         ArrayList<Student> res = new ArrayList<>();
@@ -119,6 +127,15 @@ public class StudentProcessor {
         return res;
     }
 
+    public void addSomeRecords() {
+        Student.StudentBuilder builder = new Student.StudentBuilder();
+        students.add(builder.setID(1).setFullName("Petrov Petr Petrovich").setBirthday("01.02.1998").setFaculty("Computer Science").setAddress("Stroiteley 45").setPhone("3456754").setCourse(3).setGroup(3141).build());
+        students.add(builder.setID(2).setFullName("Ivanov Ivan Ivanovich").setBirthday("17.09.1999").setFaculty("Computer Science").setAddress("Mira 12").setPhone("778611").setCourse(2).setGroup(2141).build());
+        students.add(builder.setID(3).setFullName("Sidorov Sidor Sidorovich").setBirthday("30.05.2000").setFaculty("Software Engineering").setAddress("Yuzhnaya 59").setPhone("001343").setCourse(1).setGroup(1151).build());
+        students.add(builder.setID(4).setFullName("Vasiliev Vasiliy Vasilievich").setBirthday("23.01.2000").setFaculty("Computer Science").setAddress("Sobornaya 3").setPhone("765434").setCourse(2).setGroup(2141).build());
+        students.add(builder.setID(5).setFullName("Mihaylov Mihail Mihaylovich").setBirthday("08.11.1999").setFaculty("Computer Science").setAddress("Pogranichnaya 27").setPhone("08467").setCourse(2).setGroup(2141).build());
+    }
+
     private Student enterStudentData() {
         Student.StudentBuilder builder = new Student.StudentBuilder();
         System.out.print("Enter ID: ");
@@ -141,24 +158,5 @@ public class StudentProcessor {
         System.out.print("Enter group: ");
         builder.setGroup(in.nextInt());
         return builder.build();
-    }
-
-    public Student findStudent(int id) {
-        Student student = new Student.StudentBuilder().setID(id).build();
-        int index = students.indexOf(student);
-        if ( index != -1 ) {
-            return students.get(index);
-        } else {
-            return null;
-        }
-    }
-
-    public void addSomeRecords() {
-        Student.StudentBuilder builder = new Student.StudentBuilder();
-        students.add(builder.setID(1).setFullName("Petrov Petr Petrovich").setBirthday("01.02.1998").setFaculty("Computer Science").setAddress("Stroiteley 45").setPhone("3456754").setCourse(3).setGroup(3141).build());
-        students.add(builder.setID(2).setFullName("Ivanov Ivan Ivanovich").setBirthday("17.09.1999").setFaculty("Computer Science").setAddress("Mira 12").setPhone("778611").setCourse(2).setGroup(2141).build());
-        students.add(builder.setID(3).setFullName("Sidorov Sidor Sidorovich").setBirthday("30.05.2000").setFaculty("Software Engineering").setAddress("Yuzhnaya 59").setPhone("001343").setCourse(1).setGroup(1151).build());
-        students.add(builder.setID(4).setFullName("Vasiliev Vasiliy Vasilievich").setBirthday("23.01.2000").setFaculty("Computer Science").setAddress("Sobornaya 3").setPhone("765434").setCourse(2).setGroup(2141).build());
-        students.add(builder.setID(5).setFullName("Mihaylov Mihail Mihaylovich").setBirthday("08.11.1999").setFaculty("Computer Science").setAddress("Pogranichnaya 27").setPhone("08467").setCourse(2).setGroup(2141).build());
     }
 }
